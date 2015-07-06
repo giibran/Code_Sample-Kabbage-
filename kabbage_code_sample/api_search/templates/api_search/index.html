@@ -32,5 +32,21 @@
   </div>
 </div><!-- container -->
 
+<div class="container-fluid" ng-app="kabbageApp">
+  <div class="row">
+    <div class="col-md-6 wikipedia-col" ng-controller="wikipediaController">
+      <div ng-repeat="item in wikipediaFound.query.search">
+        <pre>
+          <h4 ng-bind="item.title"></h4>
+          <p ng-bind="item.snippet"></p>
+        </pre>
+      </div>
+    </div>
+    <div class="col-md-6 twitter-col">
+
+    </div>
+  </div>
+</div>
+
 
 {% endblock content %}
