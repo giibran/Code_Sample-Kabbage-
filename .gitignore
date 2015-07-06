@@ -64,3 +64,6 @@ target/
 *.pyc
 __pycache__/
 local_settings.py
+
+kabbage_code_sample/db.sqlite3
+
