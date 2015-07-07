@@ -35,15 +35,28 @@
 <div class="container-fluid" ng-app="kabbageApp">
   <div class="row">
     <div class="col-md-6 wikipedia-col" ng-controller="wikipediaController">
-      <div ng-repeat="item in wikipediaFound.query.search">
-        <pre>
-          <h4 ng-bind="item.title"></h4>
-          <p ng-bind="item.snippet"></p>
-        </pre>
+      <div class="list-group" ng-repeat="item in wikipediaFound.query.search">
+        <a href="#" class="list-group-item">
+          <h5 ng-bind="item.title"></h5>
+          <p ng-bind-html="item.snippet"></p>
+        </a>
       </div>
     </div>
-    <div class="col-md-6 twitter-col">
-
+    <div class="col-md-6 twitter-col" ng-controller="twitterController">
+      <div class="list-group" ng-repeat="item in twitterFound.statuses">
+        <a href="#" class="list-group-item">
+          <div class="row">
+            <div class="col-md-10">
+              <h5 ng-bind="item['text']"></h5>
+            </div>
+            <div class="col-md-2">
+              {% verbatim %}
+              <img ng-src="{{item.user.profile_image_url_https}}" />
+              {% endverbatim %}
+            </div>
+          </div>
+        </a>
+      </div>
     </div>
   </div>
 </div>
