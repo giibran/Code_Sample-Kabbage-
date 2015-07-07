@@ -6,20 +6,16 @@
 			requireBase: false
 			});
 	})
-	.factory('WikipediaService', ['$http', '$location', function($http, $location){
-		var getWikipediaItems = function (){
-			var queryParams = $location.search();
-			var searchTerm = queryParams['search'];
+	.factory('WikipediaService', ['$http', function($http){
+		var getWikipediaItems = function (searchTerm){
 			return $http.get('/api/search/?search=' + searchTerm + '&service=wikipedia');
 		};
 		return{
 			'getWikipediaItems': getWikipediaItems
 		}
 	}])
-	.factory('TwitterService', ['$http', '$location', function($http, $location){
-		var getTwitterItems = function (){
-			var queryParams = $location.search();
-			var searchTerm = queryParams['search'];
+	.factory('TwitterService', ['$http', function($http){
+		var getTwitterItems = function (searchTerm){
 			return $http.get('/api/search/?search=' + searchTerm + '&service=twitter');
 		};
 		return{

@@ -3,7 +3,6 @@ import json
 
 from django.views import generic
 from django.contrib.auth import logout
-from django.contrib import messages
 from django.shortcuts import redirect
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -14,9 +13,6 @@ from twython import Twython
 SOCIAL_APP = SocialApp.objects.get(id=1)
 APP_KEY = SOCIAL_APP.client_id
 APP_SECRET = SOCIAL_APP.secret
-
-APP_KEY = 'B4rAjU1kSMGVCC67BwQJIE3Yi'
-APP_SECRET = 'KPmu2qVAhRpsk7PpDAjb9DlfTlwkfiEY2JLLJlZP80bddv73Uv'
 
 
 class IndexView(generic.TemplateView):
@@ -57,13 +53,4 @@ class LogoutRedirectView(generic.RedirectView):
     def get(self, request, *args, **kwargs):
         if self.request.user.is_authenticated():
             logout(self.request)
-            messages.add_message(
-                request=request, level=messages.SUCCESS,
-                message='Logout successful'
-                )
-        else:
-            messages.add_message(
-                request=request, level=messages.ERROR,
-                message='There is no user logged in'
-                )
         return super(LogoutRedirectView, self).get(request, *args, **kwargs)
