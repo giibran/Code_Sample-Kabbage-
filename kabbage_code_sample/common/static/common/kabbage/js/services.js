@@ -8,6 +8,7 @@
 	})
 	.factory('WikipediaService', ['$http', function($http){
 		var getWikipediaItems = function (searchTerm){
+			searchTerm = searchTerm.split(' ').join('%20');
 			return $http.get('/api/search/?search=' + searchTerm + '&service=wikipedia');
 		};
 		return{
@@ -16,6 +17,7 @@
 	}])
 	.factory('TwitterService', ['$http', function($http){
 		var getTwitterItems = function (searchTerm){
+			searchTerm = searchTerm.split(' ').join('%20');
 			return $http.get('/api/search/?search=' + searchTerm + '&service=twitter');
 		};
 		return{

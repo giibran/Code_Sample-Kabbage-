@@ -35,7 +35,8 @@ class SearchView(APIView):
         search_term = request.GET['search']
         service_used = request.GET['service']
         if service_used == 'wikipedia':
-            wikipedia_url = 'https://en.wikipedia.org/w/api.php?action=query&list=search&format=json&srsearch={search_term}+incategory:English-language_films'.format(search_term=search_term)  # noqa
+            wikipedia_search_term = "%20".join(search_term.split())
+            wikipedia_url = 'https://en.wikipedia.org/w/api.php?action=query&list=search&format=json&srsearch={search_term}'.format(search_term=wikipedia_search_term)  # noqa
             response = requests.get(wikipedia_url)
             response = json.loads(response.text)
         elif service_used == 'twitter':
@@ -44,7 +45,7 @@ class SearchView(APIView):
 
     def search_twitter(self, search_term):
         twitter = Twython(APP_KEY, APP_SECRET)
-        result_search = twitter.search(q=search_term, result_type='popular')
+        result_search = twitter.search(q=search_term)
         return result_search
 
 
