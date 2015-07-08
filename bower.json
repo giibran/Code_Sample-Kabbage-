@@ -1,0 +1,19 @@
+{
+  "name": "Kabbage_Code_Sample",
+  "version": "0.0.0",
+  "homepage": "https://github.com/giibran/Code_Sample-Kabbage-",
+  "authors": [
+    "giibran <gibranarias@gmail.com>"
+  ],
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "angularjs": "~1.4.2",
+    "jquery": "~2.1.4",
+    "angular-sanitize": "~1.4.2",
+    "angular-mocks": "~1.4.2",
+    "bootstrap": "~3.3.5"
+  }
+}

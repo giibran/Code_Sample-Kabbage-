@@ -1,6 +1,6 @@
 (function(){
 	angular.module('kabbageController', ['kabbageService', 'ngSanitize'])
-		.controller('wikipediaController', ['$scope', 'WikipediaService', '$sce', '$location', function($scope, WikipediaService, $sce, $location){
+		.controller('wikipediaController', ['$scope', 'WikipediaService', '$location', function($scope, WikipediaService, $location){
 			var queryParams = $location.search();
 			if (queryParams['search']) {
 				WikipediaService.getWikipediaItems(queryParams['search'])

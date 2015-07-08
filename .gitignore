@@ -67,3 +67,6 @@ local_settings.py
 
 kabbage_code_sample/db.sqlite3
 
+node_modules/
+
+bower_components
