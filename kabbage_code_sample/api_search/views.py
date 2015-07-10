@@ -10,9 +10,12 @@ from allauth.socialaccount.models import SocialApp
 
 from twython import Twython
 
-SOCIAL_APP = SocialApp.objects.get(id=1)
-APP_KEY = SOCIAL_APP.client_id
-APP_SECRET = SOCIAL_APP.secret
+try:
+    SOCIAL_APP = SocialApp.objects.get(id=1)
+    APP_KEY = SOCIAL_APP.client_id
+    APP_SECRET = SOCIAL_APP.secret
+except:
+    ADMIN_NOT_SET = True
 
 
 class IndexView(generic.TemplateView):
@@ -30,23 +33,26 @@ class LoginView(generic.TemplateView):
 
 
 class SearchView(APIView):
+    try:
+        if ADMIN_NOT_SET is True:
+            pass
+    except:
+        def get(self, request, format=None):
+            search_term = request.GET['search']
+            service_used = request.GET['service']
+            if service_used == 'wikipedia':
+                wikipedia_search_term = "%20".join(search_term.split())
+                wikipedia_url = 'https://en.wikipedia.org/w/api.php?action=query&list=search&format=json&srsearch={search_term}'.format(search_term=wikipedia_search_term)  # noqa
+                response = requests.get(wikipedia_url)
+                response = json.loads(response.text)
+            elif service_used == 'twitter':
+                response = self.search_twitter(search_term)
+            return Response(response)
 
-    def get(self, request, format=None):
-        search_term = request.GET['search']
-        service_used = request.GET['service']
-        if service_used == 'wikipedia':
-            wikipedia_search_term = "%20".join(search_term.split())
-            wikipedia_url = 'https://en.wikipedia.org/w/api.php?action=query&list=search&format=json&srsearch={search_term}'.format(search_term=wikipedia_search_term)  # noqa
-            response = requests.get(wikipedia_url)
-            response = json.loads(response.text)
-        elif service_used == 'twitter':
-            response = self.search_twitter(search_term)
-        return Response(response)
-
-    def search_twitter(self, search_term):
-        twitter = Twython(APP_KEY, APP_SECRET)
-        result_search = twitter.search(q=search_term)
-        return result_search
+        def search_twitter(self, search_term):
+            twitter = Twython(APP_KEY, APP_SECRET)
+            result_search = twitter.search(q=search_term)
+            return result_search
 
 
 class LogoutRedirectView(generic.RedirectView):

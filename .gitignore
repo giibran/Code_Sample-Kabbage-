@@ -11,7 +11,6 @@ __pycache__/
 env/
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
@@ -69,4 +68,3 @@ kabbage_code_sample/db.sqlite3
 
 node_modules/
 
-bower_components
