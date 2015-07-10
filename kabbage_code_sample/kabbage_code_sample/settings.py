@@ -15,18 +15,11 @@ import os
 
 import dj_database_url
 
-# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'd(a79&petu$!+q3v4!smusf&x#4ejad12z+zwz$4*8r7n!ju2r'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
 
 # ALLOWED_HOSTS = []
 
@@ -90,18 +83,6 @@ AUTHENTICATION_BACKENDS = (
 WSGI_APPLICATION = 'kabbage_code_sample.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
-
-DATABASES = {'default': dj_database_url.config()}
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'kabbage',
-#     }
-# }
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
@@ -130,11 +111,26 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
 
-# Static asset configuration
-
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
 
-# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+# DEVELOPMENT ENVIRONMENT
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'kabbage',
+    }
+}
+
+# PRODUCTION ENVIRONMENT
+
+# BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = False
+# DATABASES = {'default': dj_database_url.config()}
+# Static asset configuration
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')

@@ -5,3 +5,13 @@
 .logout-button{
 	margin-top: 8px;
 }
+
+.provider-name{
+	text-align: center;
+	background: -webkit-linear-gradient(#FFFFFF, #DDE0EC);
+	background: -o-linear-gradient(#FFFFFF, #DDE0EC);
+	background: -moz-linear-gradient(#FFFFFF, #DDE0EC);
+	background: linear-gradient(#FFFFFF, #DDE0EC);
+	padding: 10px;
+	border-radius: 4px;
+}

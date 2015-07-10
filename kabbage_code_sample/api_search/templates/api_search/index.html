@@ -35,6 +35,7 @@
 <div class="container-fluid" ng-app="kabbageApp">
   <div class="row">
     <div class="col-md-6 wikipedia-col" ng-controller="wikipediaController">
+      <h4 class="provider-name">Wikipedia</h4>
       <div class="list-group" ng-repeat="item in wikipediaFound.query.search">
         <a href="#" class="list-group-item">
           <h5 ng-bind="item.title"></h5>
@@ -43,6 +44,7 @@
       </div>
     </div>
     <div class="col-md-6 twitter-col" ng-controller="twitterController">
+      <h4 class="provider-name">Twitter</h4>
       <div class="list-group" ng-repeat="item in twitterFound.statuses">
         <a href="#" class="list-group-item">
           <div class="row">
