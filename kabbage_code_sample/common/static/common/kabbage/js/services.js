@@ -8,8 +8,12 @@
 	})
 	.factory('WikipediaService', ['$http', function($http){
 		var getWikipediaItems = function (searchTerm){
-			searchTerm = searchTerm.split(' ').join('%20');
-			return $http.get('/api/search/?search=' + searchTerm + '&service=wikipedia');
+			searchTerm['search'] = searchTerm['search'].split(' ').join('%20');
+			if(searchTerm['latitude']){
+				return $http.get('/api/search/?search=' + searchTerm['search'] + '&service=wikipedia&latitude=' + searchTerm['latitude'] + '&longitude=' + searchTerm['longitude']);
+			}else{
+				return $http.get('/api/search/?search=' + searchTerm['search'] + '&service=wikipedia');
+			}
 		};
 		return{
 			'getWikipediaItems': getWikipediaItems
@@ -17,8 +21,12 @@
 	}])
 	.factory('TwitterService', ['$http', function($http){
 		var getTwitterItems = function (searchTerm){
-			searchTerm = searchTerm.split(' ').join('%20');
-			return $http.get('/api/search/?search=' + searchTerm + '&service=twitter');
+			searchTerm['search'] = searchTerm['search'].split(' ').join('%20');
+			if(searchTerm['latitude']){
+				return $http.get('/api/search/?search=' + searchTerm['search'] + '&service=twitter&latitude=' + searchTerm['latitude'] + '&longitude=' + searchTerm['longitude']);
+			}else{
+				return $http.get('/api/search/?search=' + searchTerm['search'] + '&service=twitter');
+			}
 		};
 		return{
 			'getTwitterItems': getTwitterItems
