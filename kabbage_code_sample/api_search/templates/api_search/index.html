@@ -17,9 +17,14 @@
           <form class="navbar-form navbar-left" role="search" method="get" action="{% url 'api_search:index' %}">
             <div class="form-group">
               <input name="search" type="text" class="form-control" placeholder="Search">
+              <input type="hidden" name="latitude" id="latitude" disabled="disabled">
+              <input type="hidden" name="longitude" id="longitude" disabled="disabled">
             </div>
             <button type="submit" class="btn btn-default">Search</button>
           </form>
+          <div class="">
+          <label class="radious-search-label"><input name="search-near" type="checkbox" class="radious-search-input" id="search-near">Search around 100 miles</label>
+          </div>
         </div>
       </div>
     </nav>
@@ -37,16 +42,24 @@
     <div class="col-md-6 wikipedia-col" ng-controller="wikipediaController">
       <h4 class="provider-name">Wikipedia</h4>
       <div class="list-group" ng-repeat="item in wikipediaFound.query.search">
-        <a href="#" class="list-group-item">
+        <div class="list-group-item">
           <h5 ng-bind="item.title"></h5>
-          <p ng-bind-html="item.snippet"></p>
-        </a>
+          <p ng-show="item.snippet != null" ng-bind-html="item.snippet"></p>
+          {% verbatim %}
+          <p ng-show="item.pageid != null">
+            <a href="https://en.wikipedia.org/?curid={{item.pageid}}">View in wikipedia</a>
+          </p>
+          {% endverbatim %}
+        </div>
+      </div>
+      <div class="alert alert-warning" ng-show="!wikipediaFound.query.search.length" role="alert">
+        No items to show.
       </div>
     </div>
     <div class="col-md-6 twitter-col" ng-controller="twitterController">
       <h4 class="provider-name">Twitter</h4>
       <div class="list-group" ng-repeat="item in twitterFound.statuses">
-        <a href="#" class="list-group-item">
+        <div href="#" class="list-group-item">
           <div class="row">
             <div class="col-md-10">
               <h5 ng-bind="item['text']"></h5>
@@ -57,7 +70,10 @@
               {% endverbatim %}
             </div>
           </div>
-        </a>
+        </div>
+      </div>
+      <div class="alert alert-warning" ng-show="!twitterFound.statuses.length" role="alert">
+        No items to show.
       </div>
     </div>
   </div>

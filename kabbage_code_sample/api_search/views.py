@@ -1,5 +1,6 @@
 import requests
 import json
+import wikipedia
 
 from django.views import generic
 from django.contrib.auth import logout
@@ -42,16 +43,44 @@ class SearchView(APIView):
             service_used = request.GET['service']
             if service_used == 'wikipedia':
                 wikipedia_search_term = "%20".join(search_term.split())
-                wikipedia_url = 'https://en.wikipedia.org/w/api.php?action=query&list=search&format=json&srsearch={search_term}'.format(search_term=wikipedia_search_term)  # noqa
-                response = requests.get(wikipedia_url)
-                response = json.loads(response.text)
+                try:
+                    if request.GET['latitude']:
+                        lat_lon = request.GET['latitude'] + "%7C" + request.GET['longitude']  # noqa
+                        wikipedia_url = 'https://en.wikipedia.org/w/api.php?action=query&list=geosearch&format=json&gscoord={lat_lon}&gsradius=10000&gslimit=500'.format(search_term=wikipedia_search_term, lat_lon=lat_lon)  # noqa
+                except:
+                    wikipedia_url = 'https://en.wikipedia.org/w/api.php?action=query&list=search&format=json&srsearch={search_term}'.format(search_term=wikipedia_search_term)  # noqa
+                # wikipedia_url = 'https://en.wikipedia.org/w/api.php?action=query&list=search&format=json&srsearch={search_term}'.format(search_term=wikipedia_search_term)  # noqa
+                try:
+                    if request.GET['latitude']:
+                        response = requests.get(wikipedia_url)
+                        response = json.loads(response.text)
+                        filer_results = [
+                            item
+                            for item in response['query']['geosearch']
+                            if search_term.lower() in item['title'].lower()
+                            ]
+                        response['query']['search'] = filer_results
+                except:
+                    response = requests.get(wikipedia_url)
+                    response = json.loads(response.text)
             elif service_used == 'twitter':
-                response = self.search_twitter(search_term)
+                try:
+                    if request.GET['latitude']:
+                        geocode = '{latitude},{longitude},100mi'.format(
+                            latitude=request.GET['latitude'],
+                            longitude=request.GET['longitude']
+                            )
+                        response = self.search_twitter(search_term, geocode=geocode)  # noqa
+                except:
+                    response = self.search_twitter(search_term)
             return Response(response)
 
-        def search_twitter(self, search_term):
+        def search_twitter(self, search_term, geocode=None):
             twitter = Twython(APP_KEY, APP_SECRET)
-            result_search = twitter.search(q=search_term)
+            if geocode:
+                result_search = twitter.search(q=search_term, geocode=geocode)
+            else:
+                result_search = twitter.search(q=search_term)
             return result_search
 
 
