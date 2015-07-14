@@ -116,21 +116,21 @@ STATIC_URL = '/static/'
 
 # DEVELOPMENT ENVIRONMENT
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'kabbage',
-    }
-}
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = True
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'kabbage',
+#     }
+# }
 
 # PRODUCTION ENVIRONMENT
 
-# BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-# # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = False
-# DATABASES = {'default': dj_database_url.config()}
-# # Static asset configuration
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = False
+DATABASES = {'default': dj_database_url.config()}
+# Static asset configuration
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
